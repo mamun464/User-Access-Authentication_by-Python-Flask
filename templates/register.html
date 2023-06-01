@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/external.css')}}">
+{% endblock %}
+{% block content %}
+
+<div class="box">
+    <h1>Register</h1>
+    <form action="{{ url_for('register') }}" method="post" novalidate enctype="multipart/form-data">
+        {{ form.csrf_token }}
+
+        <div class="form-group">
+            {{ form.name(class="form-control", placeholder="Name") }}
+            {% for error in form.name.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label for="image" style="color: white;">Profile Image</label>
+            {{ form.image(class="form-control-file", id="image") }}
+            {% for error in form.image.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+            {% if error_img %}
+                <p class="help-block text-danger">{{ error_img }}</p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.email(class="form-control", placeholder="Email") }}
+            {% for error in form.email.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+            {% if error_email %}
+                <p class="help-block text-danger">{{ error_email }}</p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password(class="form-control", placeholder="Password") }}
+            {% for error in form.password.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}
+            {% for error in form.confirm_password.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up.</button>
+    </form>
+</div>
+
+
+{% endblock %}

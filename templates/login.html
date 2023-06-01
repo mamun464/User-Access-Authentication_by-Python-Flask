@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/external.css')}}">
+{% endblock %}
+{% block content %}
+
+<div class="box">
+    <h1>Login Portal</h1>
+    <br>
+    {% with Unauthorized_error = get_flashed_messages() %}
+    {% if Unauthorized_error %}
+                <h6 class="help-block text-danger">{{ Unauthorized_error[0] }}</h6>
+                <br>
+            {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('login') }}" method="post" novalidate>
+        {{ form.csrf_token }}
+
+        <div class="form-group">
+<!--            <label for="email">Email</label>-->
+            {{ form.email(class="form-control", placeholder="Email") }}
+            {% for error in form.email.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+            {% if error_email %}
+                <p class="help-block text-danger">{{ error_email }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+<!--            <label for="password">Password</label>-->
+            {{ form.password(class="form-control", placeholder="Password") }}
+            {% for error in form.password.errors %}
+                <p class="help-block text-danger">{{ error }}</p>
+            {% endfor %}
+             {% if error_pass %}
+                <p class="help-block text-danger">{{ error_pass }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Sign me up.</button>
+    </form>
+</div>
+
+{% endblock %}
